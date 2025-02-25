@@ -1,0 +1,15 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+Type=forking
+User=www-data
+Group=www-data
+WorkingDirectory=/UUmaraliyev/invoice-sender
+Environment="DJANGO_SETTINGS_MODULE=config.settings"
+ExecStart=/UUmaraliyev/invoice-sender/.venv/bin/celery -A config worker --loglevel=INFO
+ExecStop=/UUmaraliyev/invoice-sender/.venv/bin/celery -A config control shutdown
+
+[Install]
+WantedBy=multi-user.target
